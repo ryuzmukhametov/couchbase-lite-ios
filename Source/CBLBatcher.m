@@ -34,7 +34,7 @@
     self = [super init];
     if (self) {
         _capacity = capacity;
-        _delay = delay;
+        _delay = 0.1; //delay;
         _processor = [block copy];
     }
     return self;
