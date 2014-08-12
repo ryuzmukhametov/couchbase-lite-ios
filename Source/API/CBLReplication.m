@@ -32,6 +32,7 @@
 
 NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
 
+NSString* const kCBLReplicationHeartbeatChangeNotification = @"CBLReplicationHearbeatChange";
 
 #define kByChannelFilterName @"sync_gateway/bychannel"
 #define kChannelsQueryParam  @"channels"
@@ -42,6 +43,7 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
 @property (nonatomic, readwrite) CBLReplicationStatus status;
 @property (nonatomic, readwrite) unsigned completedChangesCount, changesCount;
 @property (nonatomic, readwrite, retain) NSError* lastError;
+@property (nonatomic, readwrite, retain) NSDate* lastHeartbeatTime;
 @end
 
 
@@ -58,6 +60,7 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
 @synthesize headers=_headers, OAuth=_OAuth, customProperties=_customProperties;
 @synthesize running = _running, completedChangesCount=_completedChangesCount;
 @synthesize changesCount=_changesCount, lastError=_lastError, status=_status;
+@synthesize lastHeartbeatTime=_lastHeartbeatTime;
 @synthesize authenticator=_authenticator;
 
 
@@ -319,6 +322,20 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
 }
 
 
+- (void)updateHeartbeat: (NSDate*)lastHeartbeatTime
+{
+    BOOL changed = NO;
+    if (![lastHeartbeatTime isEqualToDate:_lastHeartbeatTime]) {
+        self.lastHeartbeatTime = lastHeartbeatTime;
+        changed = YES;
+    }
+    
+    if (changed) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kCBLReplicationHeartbeatChangeNotification
+                                                            object: self];
+    }
+}
+
 - (void) updateStatus: (CBLReplicationStatus)status
                 error: (NSError*)error
             processed: (NSUInteger)changesProcessed
@@ -382,6 +399,11 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
                                                  selector: @selector(bg_replicationProgressChanged:)
                                                      name: CBL_ReplicatorProgressChangedNotification
                                                    object: _bg_replicator];
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(bg_replicationHeartbeatChanged:)
+                                                     name: CBL_ReplicatorHeartbeatChangedNotification
+                                                   object: _bg_replicator];
+        
     }
 }
 
@@ -443,6 +465,13 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
     [self bg_updateProgress];
 }
 
+// CAREFUL: This is called on the server's background thread!
+- (void) bg_replicationHeartbeatChanged: (NSNotification*)n
+{
+    AssertEq(n.object, _bg_replicator);
+    [self bg_updateHeartbeat];
+}
+
 
 // CAREFUL: This is called on the server's background thread!
 - (void) bg_updateProgress {
@@ -465,6 +494,14 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
     if (status == kCBLReplicationStopped) {
         [self bg_setReplicator: nil];
     }
+}
+
+// CAREFUL: This is called on the server's background thread!
+- (void) bg_updateHeartbeat {
+    NSDate *lastHeartbeatTime = _bg_replicator.lastHeartbeatTime;
+    [_database doAsync: ^{
+        [self updateHeartbeat:lastHeartbeatTime];
+    }];
 }
 
 

@@ -117,7 +117,7 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     _changeTracker.usePOST = [self serverIsSyncGatewayVersion: @"0.93"];
 
     unsigned heartbeat = $castIf(NSNumber, _options[kCBLReplicatorOption_Heartbeat]).unsignedIntValue;
-    if (heartbeat >= 15000)
+    if (heartbeat >= 5000)
         _changeTracker.heartbeat = heartbeat / 1000.0;
     if (pollInterval > 0.0)
         _changeTracker.pollInterval = pollInterval;
@@ -274,6 +274,12 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     if (!_caughtUp)
         [self asyncTasksFinished: 1]; // balances -asyncTaskStarted in -beginReplicating
 }
+
+- (void)changeTrackerGotHeartbeat
+{
+    self.lastHeartbeatTime = [NSDate date];
+}
+
 
 
 #pragma mark - REVISION CHECKING:

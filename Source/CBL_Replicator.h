@@ -19,6 +19,9 @@ extern NSString* CBL_ReplicatorProgressChangedNotification;
 /** Posted when replicator stops running. */
 extern NSString* CBL_ReplicatorStoppedNotification;
 
+/** Posted when heartbeat time changes. */
+extern NSString* CBL_ReplicatorHeartbeatChangedNotification;
+
 
 /** Abstract base class for push or pull replications. */
 @interface CBL_Replicator : NSObject
@@ -92,6 +95,8 @@ extern NSString* CBL_ReplicatorStoppedNotification;
     This is set to nil when starting. It may also be set to nil by the client if desired.
     Not all errors are fatal; if .running is still true, the replicator will retry. */
 @property (strong, nonatomic) NSError* error;
+
+@property (strong, nonatomic) NSDate *lastHeartbeatTime;
 
 /** A unique-per-process string identifying this replicator instance. */
 @property (copy, nonatomic) NSString* sessionID;

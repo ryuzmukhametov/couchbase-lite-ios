@@ -152,6 +152,9 @@ typedef enum {
 /** The error status of the replication, or nil if there have not been any errors since it started. */
 @property (nonatomic, readonly, retain) NSError* lastError;
 
+/** Last heartbeat time */
+@property (nonatomic, readonly, retain) NSDate* lastHeartbeatTime;
+
 /** The number of completed changes processed, if the task is active, else 0 (observable). */
 @property (nonatomic, readonly) unsigned completedChangesCount;
 
@@ -177,3 +180,5 @@ typedef enum {
     {status, running, error, completed, total}. It's often more convenient to observe this
     notification rather than observing each property individually. */
 extern NSString* const kCBLReplicationChangeNotification;
+
+extern NSString* const kCBLReplicationHeartbeatChangeNotification;

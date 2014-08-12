@@ -28,6 +28,7 @@
                                deleted: (BOOL)deleted;
 - (void) changeTrackerCaughtUp;
 - (void) changeTrackerFinished;
+- (void) changeTrackerGotHeartbeat;
 @optional
 - (void) changeTrackerStopped: (CBLChangeTracker*)tracker;
 @end

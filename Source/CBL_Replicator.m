@@ -41,6 +41,7 @@
 NSString* CBL_ReplicatorProgressChangedNotification = @"CBL_ReplicatorProgressChanged";
 NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
 
+NSString* CBL_ReplicatorHeartbeatChangedNotification = @"CBL_ReplicatorHeartbeatChanged";
 
 #if TARGET_OS_IPHONE
 @interface CBL_Replicator (Backgrounding)
@@ -67,6 +68,7 @@ NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
     NSString* _sessionID;
     unsigned _revisionsFailed;
     NSError* _error;
+    NSDate* _lastHeartbeatTime;
     NSThread* _thread;
     NSString* _remoteCheckpointDocID;
     NSDictionary* _remoteCheckpoint;
@@ -156,6 +158,7 @@ NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
 @synthesize db=_db, remote=_remote, filterName=_filterName, filterParameters=_filterParameters, docIDs = _docIDs;
 @synthesize running=_running, online=_online, active=_active, continuous=_continuous;
 @synthesize error=_error, sessionID=_sessionID, options=_options;
+@synthesize lastHeartbeatTime=_lastHeartbeatTime;
 @synthesize changesProcessed=_changesProcessed, changesTotal=_changesTotal;
 @synthesize remoteCheckpoint=_remoteCheckpoint;
 @synthesize authorizer=_authorizer;
@@ -203,6 +206,14 @@ NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
                                                coalesceMask: NSNotificationCoalescingOnSender |
                                                              NSNotificationCoalescingOnName
                                                    forModes: nil];
+}
+
+- (void) postHeartbeatChanged {
+    LogTo(SyncVerbose, @"%@: postHeartbeatChanged (%@)", self, _lastHeartbeatTime);
+    NSNotification* n = [NSNotification notificationWithName: CBL_ReplicatorHeartbeatChangedNotification
+                                                      object: self];
+    [[NSNotificationQueue defaultQueue] enqueueNotification: n
+                                               postingStyle: NSPostNow];
 }
 
 
@@ -281,6 +292,12 @@ NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
         _error = error;
         [self postProgressChanged];
     }
+}
+
+- (void)setLastHeartbeatTime:(NSDate *)lastHeartbeatTime
+{
+    _lastHeartbeatTime = lastHeartbeatTime;
+    [self postHeartbeatChanged];
 }
 
 

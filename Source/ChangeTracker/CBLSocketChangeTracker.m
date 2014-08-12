@@ -188,6 +188,9 @@
     NSInteger bytesRead = [_trackingInput read: buffer maxLength: sizeof(buffer)];
     if (bytesRead > 0)
         [self parseBytes: buffer length: bytesRead];
+    if (bytesRead == 1 && buffer[0] == '\n') {
+        [self.client changeTrackerGotHeartbeat];
+    }
 }
 
 
