@@ -36,6 +36,7 @@ _CBLHTTPErrorDomain
 _kCBLDatabaseChangeNotification
 _kCBLDocumentChangeNotification
 _kCBLReplicationChangeNotification
+_kCBLDatabaseChangeNowNotification
 
 # Public functions:
 _CBLGeoCoordPairToPoint

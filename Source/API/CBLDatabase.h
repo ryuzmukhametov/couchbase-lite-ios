@@ -231,6 +231,7 @@ typedef BOOL (^CBLFilterBlock) (CBLSavedRevision* revision, NSDictionary* __null
     CBLDatabaseChange objects that describe the revisions that were added. */
 extern NSString* const kCBLDatabaseChangeNotification;
 
+extern NSString* const kCBLDatabaseChangeNowNotification;
 
 
 

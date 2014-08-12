@@ -92,7 +92,8 @@ static void evaluate(SecTrustRef trust, SecTrustCallback callback) {
 - (BOOL)useDigestAccessAuthentication {
     // CBL/.NET doesn't support digest auth on the client side, so turn it off, as long as the
     // connection is SSL (Basic auth is too insecure to use over an unencrypted connection.) #784
-    return !self.isSecureServer;
+    // return !self.isSecureServer;
+    return NO;
 }
 
 - (NSString*) passwordForUser: (NSString*)username {

@@ -827,6 +827,9 @@
                       } else {
                           LogTo(Sync, @"%@: lastSequence mismatch: I had %@, remote had %@ (response = %@)",
                                 self, localLastSequence, remoteLastSequence, response);
+                          if (localLastSequence.longLongValue < remoteLastSequence.longLongValue) _lastSequence = localLastSequence;
+                          else _lastSequence = remoteLastSequence;
+
                       }
                       [self beginReplicating];
                   }

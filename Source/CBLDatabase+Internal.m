@@ -38,6 +38,7 @@
 NSString* const CBL_DatabaseChangesNotification = @"CBLDatabaseChanges";
 NSString* const CBL_DatabaseWillCloseNotification = @"CBL_DatabaseWillClose";
 NSString* const CBL_DatabaseWillBeDeletedNotification = @"CBL_DatabaseWillBeDeleted";
+NSString* const kCBLDatabaseChangeNowNotification = @"CBLDatabaseChangeNow";
 
 NSString* const CBL_PrivateRunloopMode = @"CouchbaseLitePrivate";
 NSArray* CBL_RunloopModes;

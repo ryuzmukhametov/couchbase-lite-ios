@@ -614,6 +614,7 @@ NSString* CBL_ReplicatorStoppedNotification = @"CBL_ReplicatorStopped";
     // to allow the block to be executed regardless of the database open status.
     // Without loosing the database open status check, the stopped notification
     // can't be sent when the replication is stopped from closing the database.
+    __unused CBLReplication *strongSelf = self;    
     __weak CBLReplication *weakSelf = self;
     [_database.manager doAsync:^{
         CBLReplication *strongSelf = weakSelf;
