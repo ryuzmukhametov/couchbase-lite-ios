@@ -155,6 +155,12 @@ typedef enum {
 /** Last heartbeat time */
 @property (nonatomic, readonly, retain) NSDate* lastHeartbeatTime;
 
+/** Last processed sequence */
+@property (nonatomic, readonly) SInt64 lastSequence;
+
+/** Last total sequence */
+@property (nonatomic, readonly) SInt64 lastTotalSequence;
+
 /** The number of completed changes processed, if the task is active, else 0 (observable). */
 @property (nonatomic, readonly) unsigned completedChangesCount;
 

@@ -85,7 +85,6 @@
 
 @interface CBL_Replicator ()
 // protected:
-@property (copy) NSString* lastSequence;
 @property (readwrite, nonatomic) NSUInteger changesProcessed, changesTotal;
 - (void) maybeCreateRemoteDB;
 - (void) beginReplicating;

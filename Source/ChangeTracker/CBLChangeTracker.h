@@ -30,6 +30,7 @@
 - (void) changeTrackerFinished;
 @optional
 - (void) changeTrackerGotHeartbeat;
+- (void)changeTrackerLastTotalSequenceChanged:(NSString *)lastTotalSequence;
 - (void) changeTrackerStopped: (CBLChangeTracker*)tracker;
 @end
 

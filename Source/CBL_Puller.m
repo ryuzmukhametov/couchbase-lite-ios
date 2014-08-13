@@ -281,6 +281,10 @@ static NSString* joinQuotedEscaped(NSArray* strings);
 }
 
 
+- (void)changeTrackerLastTotalSequenceChanged:(NSString *)lastTotalSequence
+{
+    self.lastTotalSequence = lastTotalSequence;
+}
 
 #pragma mark - REVISION CHECKING:
 

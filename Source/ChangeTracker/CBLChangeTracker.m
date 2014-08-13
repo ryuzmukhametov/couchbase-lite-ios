@@ -239,6 +239,12 @@ typedef void (^CBLChangeMatcherClient)(id sequence, NSString* docID, NSArray* re
     }
 }
 
+- (void)setLastSequenceID:(id)lastSequenceID
+{
+    _lastSequenceID = lastSequenceID;
+    [self.client changeTrackerLastTotalSequenceChanged:lastSequenceID];
+}
+
 - (BOOL) parseBytes: (const void*)bytes length: (size_t)length {
     LogTo(ChangeTrackerVerbose, @"%@: read %ld bytes", self, (long)length);
     if (!_parser) {

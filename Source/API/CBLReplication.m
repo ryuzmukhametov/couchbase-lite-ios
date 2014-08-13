@@ -44,6 +44,8 @@ NSString* const kCBLReplicationHeartbeatChangeNotification = @"CBLReplicationHea
 @property (nonatomic, readwrite) unsigned completedChangesCount, changesCount;
 @property (nonatomic, readwrite, retain) NSError* lastError;
 @property (nonatomic, readwrite, retain) NSDate* lastHeartbeatTime;
+@property (nonatomic, readwrite) SInt64 lastSequence;
+@property (nonatomic, readwrite) SInt64 lastTotalSequence;
 @end
 
 
@@ -61,6 +63,7 @@ NSString* const kCBLReplicationHeartbeatChangeNotification = @"CBLReplicationHea
 @synthesize running = _running, completedChangesCount=_completedChangesCount;
 @synthesize changesCount=_changesCount, lastError=_lastError, status=_status;
 @synthesize lastHeartbeatTime=_lastHeartbeatTime;
+@synthesize lastSequence=_lastSequence, lastTotalSequence=_lastTotalSequence;
 @synthesize authenticator=_authenticator;
 
 
@@ -487,7 +490,11 @@ NSString* const kCBLReplicationHeartbeatChangeNotification = @"CBLReplicationHea
     NSError* error = _bg_replicator.error;
     NSUInteger changes = _bg_replicator.changesProcessed;
     NSUInteger total = _bg_replicator.changesTotal;
+    NSString *lastSequnce = _bg_replicator.lastSequence;
+    NSString *lastTotalSequnce = _bg_replicator.lastTotalSequence;
     [_database doAsync: ^{
+        self.lastSequence = (SInt64)lastSequnce.longLongValue;
+        self.lastTotalSequence = (SInt64)lastTotalSequnce.longLongValue;
         [self updateStatus: status error: error processed: changes ofTotal: total];
     }];
     
@@ -504,5 +511,10 @@ NSString* const kCBLReplicationHeartbeatChangeNotification = @"CBLReplicationHea
     }];
 }
 
+- (SInt64)lastTotalSequence
+{
+    if (self.pull) return _lastTotalSequence;
+    return _database.lastSequenceNumber;
+}
 
 @end

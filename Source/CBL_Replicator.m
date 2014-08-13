@@ -159,6 +159,7 @@ NSString* CBL_ReplicatorHeartbeatChangedNotification = @"CBL_ReplicatorHeartbeat
 @synthesize running=_running, online=_online, active=_active, continuous=_continuous;
 @synthesize error=_error, sessionID=_sessionID, options=_options;
 @synthesize lastHeartbeatTime=_lastHeartbeatTime;
+@synthesize lastTotalSequence=_lastTotalSequence;
 @synthesize changesProcessed=_changesProcessed, changesTotal=_changesTotal;
 @synthesize remoteCheckpoint=_remoteCheckpoint;
 @synthesize authorizer=_authorizer;

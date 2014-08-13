@@ -34,6 +34,7 @@ extern NSString* CBL_ReplicatorHeartbeatChangedNotification;
     NSDictionary* _filterParameters;
     NSArray* _docIDs;
     NSString* _lastSequence;
+    NSString* _lastTotalSequence;
     CBLBatcher* _batcher;
     id<CBLAuthorizer> _authorizer;
     NSDictionary* _options;
@@ -97,6 +98,8 @@ extern NSString* CBL_ReplicatorHeartbeatChangedNotification;
 @property (strong, nonatomic) NSError* error;
 
 @property (strong, nonatomic) NSDate *lastHeartbeatTime;
+@property (copy) NSString* lastSequence;
+@property (copy) NSString* lastTotalSequence;
 
 /** A unique-per-process string identifying this replicator instance. */
 @property (copy, nonatomic) NSString* sessionID;
