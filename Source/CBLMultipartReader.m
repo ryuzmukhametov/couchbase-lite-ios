@@ -375,7 +375,7 @@ TestCase(CBLMultipartReader_Simple) {
     }
 }
 
-TestCase(CBLMultipartReader_GZipped) {
+/*TestCase(CBLMultipartReader_GZipped) {
     NSData* mime = CBLContentsOfTestFile(@"MultipartStars.mime");
     CBL_TestMultipartReaderDelegate* delegate = [[CBL_TestMultipartReaderDelegate alloc] init];
     CBLMultipartReader* reader = [[CBLMultipartReader alloc] initWithContentType: @"multipart/related; boundary=\"BOUNDARY\"" delegate: delegate];
@@ -391,5 +391,5 @@ TestCase(CBLMultipartReader_GZipped) {
     for (int i=0; i<100; i++)
         AssertEq(((char*)stars.bytes)[i], '*');
 }
-
+*/
 #endif

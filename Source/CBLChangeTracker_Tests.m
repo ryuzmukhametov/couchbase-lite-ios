@@ -182,12 +182,12 @@ TestCase(CBLChangeTracker_Auth) {
         return;
     }
     CBLChangeTrackerTester* tester = [[CBLChangeTrackerTester alloc] init];
-    AddTemporaryCredential(url, @"CouchDB", @"dummy", @"dummy");
+    AddTemporaryCredential(url, @"CouchDB", @"admin", @"admin");
 
     CBLChangeTracker* tracker = [[CBLChangeTracker alloc] initWithDatabaseURL: url mode: kOneShot conflicts: NO lastSequence: 0 client:  tester];
     NSArray* expected = $array($dict({@"seq", @1},
                                      {@"id", @"something"},
-                                     {@"revs", $array(@"1-31e4c2faf5cfcd56f4518c29367f9124")}) );
+                                     {@"revs", $array(@"1-967a00dff5e02add41819138abb3284d")}) );
     [tester run: tracker expectingChanges: expected];
 }
 

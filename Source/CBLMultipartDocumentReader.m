@@ -406,7 +406,8 @@
 
 #if DEBUG
 #import "CBL_BlobStore.h"
-
+/*
+ 
 TestCase(CBLMultipartDocumentReader) {
     NSString* path = [NSTemporaryDirectory() stringByAppendingPathComponent: @"cbl_test.sqlite3"];
     CBLDatabase *db = [CBLDatabase createEmptyDBAtPath: path];
@@ -463,5 +464,5 @@ TestCase(CBLMultipartDocumentReader) {
     NSDictionary* unzippedDict = [CBLMultipartDocumentReader readData: mime headers: headers toDatabase: db status: &status];
     CAssertEqual(unzippedDict, dict);
 }
-
+*/
 #endif

@@ -143,7 +143,7 @@ TestCase(CBLMultipartWriter) {
 }
 
 
-TestCase(CBLMultipartWriterGZipped) {
+/*TestCase(CBLMultipartWriterGZipped) {
     RequireTestCase(CBLMultipartWriter);
     CBLMultipartWriter* mp = [[CBLMultipartWriter alloc] initWithContentType: @"foo/bar"
                                                                     boundary: @"BOUNDARY"];
@@ -154,5 +154,5 @@ TestCase(CBLMultipartWriterGZipped) {
     NSData* output = [mp allOutput];
     AssertEqual(output, CBLContentsOfTestFile(@"MultipartStars.mime"));
 }
-
+*/
 #endif

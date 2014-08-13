@@ -625,6 +625,7 @@
 		27FFE20617BBF20D0040AE60 /* CBLReplicator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27821BBB149001B20099B373 /* CBLReplicator_Tests.m */; };
 		27FFE20A17BD28080040AE60 /* CBL_Replicator+Backgrounding.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FFE20817BD28080040AE60 /* CBL_Replicator+Backgrounding.m */; };
 		27FFE20B17BD28080040AE60 /* CBL_Replicator+Backgrounding.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FFE20817BD28080040AE60 /* CBL_Replicator+Backgrounding.m */; };
+		4AFFEF7D199B223700DFD9F3 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 275315B814ACF0330065964D /* DDLog.m */; settings = {COMPILER_FLAGS = "-Wno-deprecated-declarations"; }; };
 		792867C0178DE01900248AF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F0745C11CD50A600E9A2AB /* Foundation.framework */; };
 		792867D0178DE03E00248AF0 /* CBLJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 792867CC178DE03E00248AF0 /* CBLJSFunction.m */; };
 		792867D1178DE03E00248AF0 /* CBLJSViewCompiler_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 792867CD178DE03E00248AF0 /* CBLJSViewCompiler_Test.m */; };
@@ -2893,7 +2894,7 @@
 						DevelopmentTeam = N2Q372V7W2;
 					};
 					27B0B80A1492C16300A817AD = {
-						DevelopmentTeam = KAZWMGZL2X;
+						DevelopmentTeam = 48S7Y99T6L;
 					};
 				};
 			};
@@ -3517,6 +3518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AFFEF7D199B223700DFD9F3 /* DDLog.m in Sources */,
 				DA147C1C14BCAABE0052DA4D /* HTTPDataResponse.m in Sources */,
 				DA147C1D14BCAABE0052DA4D /* HTTPFileResponse.m in Sources */,
 				DA147C1814BCAAAD0052DA4D /* HTTPAuthenticationRequest.m in Sources */,

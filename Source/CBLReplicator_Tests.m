@@ -30,7 +30,7 @@
 #if DEBUG
 
 // The default remote server URL used by RemoteTestDBURL().
-#define kDefaultRemoteTestServer @"http://127.0.0.1:5984/"
+#define kDefaultRemoteTestServer @"http://admin:admin@192.168.20.30:5984/"
 
 // This db will get deleted and overwritten during every test.
 #define kScratchDBName @"cbl_replicator_scratch"
@@ -88,13 +88,13 @@ void AddTemporaryCredential(NSURL* url, NSString* realm,
 
 
 static id<CBLAuthorizer> authorizer(void) {
-#if 1
-    return nil;
-#else
-    NSURLCredential* cred = [NSURLCredential credentialWithUser: @"XXXX" password: @"XXXX"
+//#if 1
+//    return nil;
+//#else
+    NSURLCredential* cred = [NSURLCredential credentialWithUser: @"admin" password: @"admin"
                                                     persistence:NSURLCredentialPersistenceNone];
-    return [[[CBLBasicAuthorizer alloc] initWithCredential: cred] autorelease];
-#endif
+    return [[CBLBasicAuthorizer alloc] initWithCredential: cred];
+//#endif
 }
 
 
