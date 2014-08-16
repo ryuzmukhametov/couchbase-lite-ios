@@ -207,6 +207,12 @@ static int findCommonAncestor(CBL_Revision* rev, NSArray* possibleIDs);
             nuRev.body = nil; // save memory
             LogTo(SyncVerbose, @"%@: Queuing #%lld %@", self, nuRev.sequence, nuRev);
             [self addToInbox: nuRev];
+        } else {
+            CBL_Revision* rev = change.addedRevision;
+            if (self.lastSequence == nil || self.lastSequence.longLongValue < rev.sequence) {
+                self.lastSequence = [NSNumber numberWithUnsignedLongLong:rev.sequence].stringValue;
+            }
+            
         }
     }
 }

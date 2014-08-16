@@ -192,6 +192,7 @@ NSString* CBL_ReplicatorHeartbeatChangedNotification = @"CBL_ReplicatorHeartbeat
             _lastSequenceChanged = YES;
             [self performSelector: @selector(saveLastSequence) withObject: nil afterDelay: 5.0];
         }
+        [self postProgressChanged];
     }
 }
 
