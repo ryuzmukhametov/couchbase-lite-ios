@@ -557,7 +557,7 @@
 
     if (_longpoll && changes.count > 0) {
         Log(@"CBL_Router: Sending longpoll response");
-        [self sendResponseHeaders];
+        //[self sendResponseHeaders];
         NSDictionary* body = [self responseBodyForChanges: changes since: 0];
         _response.body = [CBL_Body bodyWithProperties: body];
         [self sendResponseBodyAndFinish: YES];
@@ -608,8 +608,8 @@
     
     if (continuous || (_longpoll && changes.count==0)) {
         // Response is going to stay open (continuous, or hanging GET):
+        [self sendResponseHeaders];
         if (continuous) {
-            [self sendResponseHeaders];
             for (CBL_Revision* rev in changes) 
                 [self sendContinuousLine: [self changeDictForRev: rev]];
         }
