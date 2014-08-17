@@ -508,8 +508,11 @@
 // Send a JSON object followed by a newline without closing the connection.
 // Used by the continuous mode of _changes and _active_tasks.
 - (void) sendContinuousLine: (NSDictionary*)changeDict {
-    NSMutableData* json = [[CBLJSON dataWithJSONObject: changeDict
+    NSMutableData* json = [[NSMutableData alloc] init];
+    if (changeDict != nil) {
+        json = [[CBLJSON dataWithJSONObject: changeDict
                                                options: 0 error: NULL] mutableCopy];
+    }
     [json appendBytes: "\n" length: 1];
     if (_onDataAvailable)
         _onDataAvailable(json, NO);
@@ -614,6 +617,10 @@
                                                  selector: @selector(dbChanged:)
                                                      name: CBL_DatabaseChangesNotification
                                                    object: db];
+
+        // plan heartbeat in main queue
+        [self planHeartbeat];
+        
         // Don't close connection; more data to come
         return 0;
     } else {
@@ -626,6 +633,24 @@
             _response.bodyObject = [self responseBodyForChanges: changes.allRevisions since: since];
         return kCBLStatusOK;
     }
+}
+
+- (void)planHeartbeat
+{
+    __weak typeof(self) weakSelf = self;
+    NSTimeInterval delayInSeconds = [self intQuery:@"hearbeat" defaultValue:60 * 1000] / 1000.0f;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [weakSelf postHeartbeat];
+    });
+}
+
+- (void)postHeartbeat
+{
+    [_server tellDatabaseManager: ^(CBLManager* dbm) {
+        [self sendContinuousLine:nil];
+    }];
+    [self planHeartbeat];    
 }
 
 
