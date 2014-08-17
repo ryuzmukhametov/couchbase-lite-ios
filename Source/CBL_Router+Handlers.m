@@ -638,7 +638,7 @@
 - (void)planHeartbeat
 {
     __weak typeof(self) weakSelf = self;
-    NSTimeInterval delayInSeconds = [self intQuery:@"hearbeat" defaultValue:60 * 1000] / 1000.0f;
+    NSTimeInterval delayInSeconds = [self intQuery:@"heartbeat" defaultValue:60 * 1000] / 1000.0f;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [weakSelf postHeartbeat];
