@@ -123,7 +123,7 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     _changeTracker.requestHeaders = headers;
     
     [_changeTracker start];
-    if (!_continuous)
+    if (!_changeTracker.continuous)
         [self asyncTaskStarted];
 }
 
@@ -142,10 +142,11 @@ static NSString* joinQuotedEscaped(NSArray* strings);
         return;
     LogTo(Sync, @"%@ STOPPING...", self);
     if (_changeTracker) {
+        BOOL continous = _changeTracker.continuous;
         _changeTracker.client = nil;  // stop it from calling my -changeTrackerStopped
         [_changeTracker stop];
         _changeTracker = nil;
-        if (!_continuous)
+        if (!continous)
             [self asyncTasksFinished: 1]; // balances -asyncTaskStarted in -startChangeTracker
         if (!_caughtUp)
             [self asyncTasksFinished: 1]; // balances -asyncTaskStarted in -beginReplicating
@@ -249,6 +250,7 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     NSError* error = tracker.error;
     LogTo(Sync, @"%@: ChangeTracker stopped; error=%@", self, error.description);
     
+    BOOL continous = _changeTracker.continuous;
     _changeTracker = nil;
     
     if (error) {
@@ -259,7 +261,7 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     }
     
     [_batcher flushAll];
-    if (!_continuous)
+    if (!continous)
         [self asyncTasksFinished: 1]; // balances -asyncTaskStarted in -startChangeTracker
     if (!_caughtUp)
         [self asyncTasksFinished: 1]; // balances -asyncTaskStarted in -beginReplicating
@@ -383,7 +385,7 @@ static NSString* joinQuotedEscaped(NSArray* strings);
     // See: http://wiki.apache.org/couchdb/HTTP_Document_API#GET
     // See: http://wiki.apache.org/couchdb/HTTP_Document_API#Getting_Attachments_With_a_Document
     NSString* path = $sprintf(@"%@?rev=%@&revs=true&attachments=true",
-                              CBLEscapeID(rev.docID), CBLEscapeID(rev.revID));
+                              CBLEscapeURLParam(rev.docID), CBLEscapeURLParam(rev.revID));
     // If the document has attachments, add an 'atts_since' param with a list of
     // already-known revisions, so the server can skip sending the bodies of any
     // attachments we already have locally:
@@ -425,8 +427,6 @@ static NSString* joinQuotedEscaped(NSArray* strings);
         }
      ];
     [self addRemoteRequest: dl];
-    dl.timeoutInterval = self.requestTimeout;
-    dl.authorizer = _authorizer;
     [dl start];
 }
 
@@ -505,8 +505,6 @@ static NSString* joinQuotedEscaped(NSArray* strings);
           }
      ];
     [self addRemoteRequest: dl];
-    dl.timeoutInterval = self.requestTimeout;
-    dl.authorizer = _authorizer;
 
     if (self.canSendCompressedRequests)
         [dl compressBody];
@@ -558,17 +556,17 @@ static NSString* joinQuotedEscaped(NSArray* strings);
                               }
                           }
                       }
+                      
+                      // Any leftover revisions that didn't get matched will be fetched individually:
+                      if (remainingRevs.count) {
+                          LogTo(Sync, @"%@ bulk-fetch didn't work for %u of %u revs; getting individually",
+                                self, (unsigned)remainingRevs.count, (unsigned)bulkRevs.count);
+                          for (CBL_Revision* rev in remainingRevs)
+                              [self queueRemoteRevision: rev];
+                          [self pullRemoteRevisions];
+                      }
                   }
                   
-                  // Any leftover revisions that didn't get matched will be fetched individually:
-                  if (remainingRevs.count) {
-                      LogTo(Sync, @"%@ bulk-fetch didn't work for %u of %u revs; getting individually",
-                            self, (unsigned)remainingRevs.count, (unsigned)bulkRevs.count);
-                      for (CBL_Revision* rev in remainingRevs)
-                          [self queueRemoteRevision: rev];
-                      [self pullRemoteRevisions];
-                  }
-
                   // Note that we've finished this task:
                   [self asyncTasksFinished: 1];
                   --_httpConnectionCount;

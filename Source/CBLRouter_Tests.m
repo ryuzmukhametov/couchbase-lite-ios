@@ -127,11 +127,11 @@ TestCase(CBL_Router_Server) {
     Send(server, @"GET", @"/_all_dbs", kCBLStatusOK, @[]);
     Send(server, @"GET", @"/non-existent", kCBLStatusNotFound, nil);
     Send(server, @"GET", @"/BadName", kCBLStatusBadID, nil);
-    Send(server, @"PUT", @"/", kCBLStatusBadRequest, nil);
-    NSDictionary* response = Send(server, @"POST", @"/", kCBLStatusBadRequest, nil);
+    Send(server, @"PUT", @"/", kCBLStatusNotFound, nil);
+    NSDictionary* response = Send(server, @"POST", @"/", kCBLStatusNotFound, nil);
     
-    CAssertEqual(response[@"status"], @(400));
-    CAssertEqual(response[@"error"], @"bad_request");
+    CAssertEqual(response[@"status"], @(404));
+    CAssertEqual(response[@"error"], @"not_found");
     
     NSDictionary* session = Send(server, @"GET", @"/_session", kCBLStatusOK, nil);
     CAssert(session[@"ok"]);
@@ -355,7 +355,7 @@ TestCase(CBL_Router_Views) {
     Send(server, @"GET", @"/db/_design/design/_view/view?key=%22bonjour%22", kCBLStatusOK,
          $dict({@"offset", @0},
                {@"rows", $array($dict({@"id", @"doc3"}, {@"key", @"bonjour"}) )},
-               {@"total_rows", @1}));
+               {@"total_rows", @4}));
 
     // Query the view with "?keys="
     Send(server, @"GET", @"/db/_design/design/_view/view?keys=%5B%22bonjour%22,%22hello%22%5D",
@@ -363,7 +363,7 @@ TestCase(CBL_Router_Views) {
          $dict({@"offset", @0},
                {@"rows", $array($dict({@"id", @"doc3"}, {@"key", @"bonjour"}),
                                 $dict({@"id", @"doc1"}, {@"key", @"hello"}) )},
-               {@"total_rows", @2}));
+               {@"total_rows", @4}));
     
     [server close];
 }
@@ -636,6 +636,7 @@ TestCase(CBL_Router_GetJSONAttachment) {
     CAssertEqual((response.headers)[@"Content-Type"], @"application/json");
     eTag = (response.headers)[@"Etag"];
     CAssert(eTag.length > 0);
+    [server close];
 }
 
 TestCase(CBL_Router_GetRange) {

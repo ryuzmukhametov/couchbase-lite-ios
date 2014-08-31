@@ -221,7 +221,7 @@ static CBLManager* sInstance;
 
 - (id) copyWithZone: (NSZone*)zone {
     CBLManager *managerCopy = [[[self class] alloc] initWithDirectory: self.directory
-                                           options: &_options
+                                                              options: &_options
                                                                shared: _shared];
     
     managerCopy.customHTTPHeaders = [self.customHTTPHeaders copy];
@@ -238,7 +238,7 @@ static CBLManager* sInstance;
     Assert(self != sInstance, @"Please don't close the sharedInstance!");
     LogTo(CBLDatabase, @"CLOSING %@ ...", self);
     for (CBLDatabase* db in _databases.allValues) {
-        [db close];
+        [db _close];
     }
     [_databases removeAllObjects];
     _shared = nil;
@@ -493,15 +493,14 @@ static CBLManager* sInstance;
 }
 
 
+// Called when a database is being closed
 - (void) _forgetDatabase: (CBLDatabase*)db {
     NSString* name = db.name;
     [_replications my_removeMatching: ^int(CBLReplication* repl) {
         return [repl localDatabase] == db;
     }];
     [_databases removeObjectForKey: name];
-    CBL_Shared* shared = _shared;
-    [shared closedDatabase: name];
-    [shared forgetDatabaseNamed: name];
+    [_shared closedDatabase: name];
 }
 
 
@@ -733,6 +732,30 @@ TestCase(CBLManager) {
 
     CAssertEq([dbm existingDatabaseNamed: @"foo" error: NULL], db);
     [dbm close];
+}
+
+TestCase(CBLManager_Close) {
+    RequireTestCase(CBLManager);
+
+    CBLManager* mgrMain = [CBLManager createEmptyAtTemporaryPath: @"CBLManagerTest"];
+
+    CBLManager* mgr1 = [mgrMain copy];
+    CBLDatabase* db = [mgr1 databaseNamed: @"test_db" error: NULL];
+    CAssert(db);
+    
+    CBLManager* mgr2 = [mgrMain copy];
+    db = [mgr2 databaseNamed: @"test_db" error: NULL];
+    CAssert(db);
+    
+    [mgr1 close];
+    NSInteger count = [mgrMain.shared countForOpenedDatabase: @"test_db"];
+    CAssertEq(count, 1);
+    
+    [mgr2 close];
+    count = [mgrMain.shared countForOpenedDatabase: @"test_db"];
+    CAssertEq(count, 0);
+    
+    [mgrMain close];
 }
 
 #endif

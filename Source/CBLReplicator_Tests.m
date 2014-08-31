@@ -251,7 +251,7 @@ TestCase(CBL_Pusher) {
         return;
     }
     
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -288,7 +288,7 @@ TestCase(CBL_Puller) {
     CAssert([doc.revID hasPrefix: @"1-"]);
     CAssertEqual(doc[@"fnord"], $true);
 
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -324,7 +324,26 @@ TestCase(CBL_Puller_Continuous) {
     CAssert([doc.revID hasPrefix: @"1-"]);
     CAssertEqual(doc[@"fnord"], $true);
 
-    [db close];
+    [db _close];
+    [server close];
+}
+
+TestCase(CBL_Puller_Continuous_PermanentError) {
+    RequireTestCase(CBL_Puller);
+    NSURL* remoteURL = RemoteTestDBURL(@"non_existent_remote_db");
+    if (!remoteURL) {
+        Warn(@"Skipping test CBL_Puller: no remote test DB URL");
+        return;
+    }
+    
+    CBLManager* server = [CBLManager createEmptyAtTemporaryPath: @"CBL_PullerTest"];
+    CBLDatabase* db = [server databaseNamed: @"db" error: NULL];
+    CAssert(db);
+    
+    NSError* error = CBLStatusToNSError(kCBLStatusNotFound, nil);
+    replic8Continuous(db, remoteURL, NO, nil, error);
+    
+    [db _close];
     [server close];
 }
 
@@ -347,7 +366,7 @@ TestCase(CBL_Puller_AuthFailure) {
     NSError* error = CBLStatusToNSError(kCBLStatusUnauthorized, nil);
     replic8Continuous(db, remoteURL, NO, nil, error);
 
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -420,7 +439,7 @@ TestCase(CBL_Puller_DocIDs) {
     CAssert([doc.revID hasPrefix: @"2-"]);
     CAssertEqual(doc[@"foo"], @1);
     
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -460,7 +479,7 @@ TestCase(CBL_Pusher_DocIDs) {
     CAssertEqual((rows[0])[@"id"], @"doc4");
     CAssertEqual((rows[1])[@"id"], @"doc7");
 
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -490,7 +509,7 @@ TestCase(CBL_Puller_FromCouchApp) {
         CAssert(data);
         CAssertEq([data length], [attachment[@"length"] unsignedLongLongValue]);
     }
-    [db close];
+    [db _close];
     [server close];
 }
 
@@ -605,6 +624,7 @@ TestCase(CBLReplicator) {
     RequireTestCase(CBL_Pusher);
     RequireTestCase(CBL_Puller);
     RequireTestCase(CBL_Puller_Continuous);
+    RequireTestCase(CBL_Puller_Continuous_PermanentError);
     RequireTestCase(CBL_Puller_AuthFailure);
     RequireTestCase(CBL_Puller_FromCouchApp);
     RequireTestCase(CBLPuller_DocIDs);
