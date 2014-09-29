@@ -45,7 +45,7 @@
 #define kDefaultMaxRevs 20
 
 NSString* const kCBLDatabaseChangeNotification = @"CBLDatabaseChange";
-
+NSString* const kCBLDatabaseChangeNowNotification = @"CBLDatabaseChangeNow";
 
 static id<CBLFilterCompiler> sFilterCompiler;
 
@@ -111,9 +111,22 @@ static id<CBLFilterCompiler> sFilterCompiler;
     // Post the public kCBLDatabaseChangeNotification:
     NSDictionary* userInfo = @{@"changes": changes,
                                @"external": @(external)};
+    
+    
+    NSNotification* nowNotification = [NSNotification notificationWithName: kCBLDatabaseChangeNowNotification
+                                                      object: self
+                                                    userInfo: userInfo];
+
+    [[NSNotificationQueue defaultQueue] enqueueNotification: nowNotification
+                  postingStyle: NSPostNow
+                  coalesceMask: NSNotificationNoCoalescing
+                      forModes: @[NSRunLoopCommonModes]];
+
+    
     NSNotification* n = [NSNotification notificationWithName: kCBLDatabaseChangeNotification
                                                       object: self
                                                     userInfo: userInfo];
+    
     if (_dispatchQueue) {
         // NSNotificationQueue is runloop-based, doesn't work on dispatch queues. (#364)
         [self doAsync:^{
