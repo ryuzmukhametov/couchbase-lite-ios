@@ -1172,6 +1172,9 @@ static NSString *CBLISResultTypeName(NSFetchRequestResultType resultType);
                         value = CBLISIsNull(value) ? nil : [CBLJSON dateWithJSONObject:value];
                         break;
                     case NSTransformableAttributeType:
+                    case NSUndefinedAttributeType:
+                    case NSBinaryDataAttributeType:
+                    case NSObjectIDAttributeType:
                         // intentionally do nothing
                         break;
                         /*
