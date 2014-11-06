@@ -217,6 +217,7 @@ typedef BOOL (^CBLFilterBlock) (CBLSavedRevision* revision, NSDictionary* params
 extern NSString* const kCBLDatabaseChangeNotification;
 
 
+extern NSString* const kCBLDatabaseChangeNowNotification;
 
 
 /** The type of callback block passed to -[CBLValidationContext enumerateChanges:]. */

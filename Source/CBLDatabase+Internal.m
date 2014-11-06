@@ -37,6 +37,7 @@
 NSString* const CBL_DatabaseChangesNotification = @"CBLDatabaseChanges";
 NSString* const CBL_DatabaseWillCloseNotification = @"CBL_DatabaseWillClose";
 NSString* const CBL_DatabaseWillBeDeletedNotification = @"CBL_DatabaseWillBeDeleted";
+NSString* const kCBLDatabaseChangeNowNotification = @"CBLDatabaseChangeNow";
 
 #define kDocIDCacheSize 1000
 
