@@ -45,7 +45,7 @@
 #define kDefaultMaxRevs 20
 
 NSString* const kCBLDatabaseChangeNotification = @"CBLDatabaseChange";
-
+NSString* const kCBLDatabaseChangeNowNotification = @"CBLDatabaseChangeNow";
 
 static id<CBLFilterCompiler> sFilterCompiler;
 
