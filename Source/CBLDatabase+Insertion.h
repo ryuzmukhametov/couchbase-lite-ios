@@ -53,4 +53,5 @@
 - (CBLStatus) _setNoAttachments: (BOOL)noAttachments forSequence: (SequenceNumber)sequence;
 #endif
 
+- (CBLStatus) purgeDocIds: (NSArray*)docIds;
 @end

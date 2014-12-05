@@ -69,6 +69,8 @@ typedef BOOL (^CBLFilterBlock) (CBLSavedRevision* revision, NSDictionary* params
     the maxRevTreeDepth, deleting unused attachment files, and vacuuming the SQLite database. */
 - (BOOL) compact: (NSError**)outError;
 
+- (BOOL)purgeDocumentsIds:(NSArray*)docIds;
+
 /** The maximum depth of a document's revision tree (or, max length of its revision history.)
     Revisions older than this limit will be deleted during a -compact: operation. 
     Smaller values save space, at the expense of making document conflicts somewhat more likely. */

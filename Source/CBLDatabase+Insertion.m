@@ -653,6 +653,32 @@
 }
 
 
+- (CBLStatus) purgeDocIds: (NSArray*)docIds
+{
+    if (docIds.count == 0)
+        return kCBLStatusOK;
+    return [self _inTransaction: ^CBLStatus {
+        NSMutableString *a = [[NSMutableString alloc] init];
+        for (NSString* docID in docIds) {
+            SInt64 docNumericID = [self getDocNumericID: docID];
+            if (!docNumericID) {
+                continue;  // no such document; skip it
+            }
+            if (a.length > 0) [a appendString:@","];
+            [a appendFormat:@"%@",@(docNumericID)];
+        }
+        
+        if (a.length == 0) {
+            return kCBLStatusOK;
+        }
+        NSString *stmt = [NSString stringWithFormat:@"DELETE FROM revs WHERE doc_id in (%@)", a.description];
+        if (![_fmdb executeUpdate:stmt]) {
+            return self.lastDbError;
+        }
+        return kCBLStatusOK;
+    }];
+}
+
 - (CBLStatus) purgeRevisions: (NSDictionary*)docsToRevs
                      result: (NSDictionary**)outResult
 {

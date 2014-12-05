@@ -225,6 +225,15 @@ static void catchInBlock(void (^block)()) {
     return YES;
 }
 
+- (BOOL)purgeDocumentsIds:(NSArray*)docIds
+{
+    CBLStatus status = [self purgeDocIds:docIds];
+    if (CBLStatusIsError(status)) {
+        return NO;
+    }
+    return YES;
+}
+
 - (NSUInteger) maxRevTreeDepth {
     return [[self infoForKey: @"max_revs"] intValue] ?: kDefaultMaxRevs;
 }
