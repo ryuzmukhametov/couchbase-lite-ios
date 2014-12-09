@@ -30,6 +30,10 @@
 
 @implementation CBLHTTPConnection
 
+- (BOOL)useDigestAccessAuthentication
+{
+    return NO;
+}
 
 - (CBLListener*) listener {
     return ((CBLHTTPServer*)config.server).listener;
