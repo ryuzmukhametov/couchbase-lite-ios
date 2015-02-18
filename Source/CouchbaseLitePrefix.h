@@ -37,6 +37,13 @@
 #define GCDAsyncReadPacket          CBL_GCDAsyncReadPacket
 #define GCDAsyncWritePacket         CBL_GCDAsyncWritePacket
 #define GCDAsyncSpecialPacket       CBL_GCDAsyncSpecialPacket
+#define GCDAsyncSocketErrorDomain CBL_GCDAsyncSocketErrorDomain
+#define GCDAsyncSocketQueueName CBL_GCDAsyncSocketQueueName
+#define GCDAsyncSocketSSLCipherSuites CBL_GCDAsyncSocketSSLCipherSuites
+#define GCDAsyncSocketSSLProtocolVersionMax CBL_GCDAsyncSocketSSLProtocolVersionMax
+#define GCDAsyncSocketSSLProtocolVersionMin CBL_GCDAsyncSocketSSLProtocolVersionMin
+#define GCDAsyncSocketThreadName CBL_GCDAsyncSocketThreadName
+
 
 // Rename the CocoaLumberjack classes to avoid collisions:
 #define DDLog                       CBL_DDLog
