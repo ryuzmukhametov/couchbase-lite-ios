@@ -43,7 +43,7 @@
 #define GCDAsyncSocketSSLProtocolVersionMax CBL_GCDAsyncSocketSSLProtocolVersionMax
 #define GCDAsyncSocketSSLProtocolVersionMin CBL_GCDAsyncSocketSSLProtocolVersionMin
 #define GCDAsyncSocketThreadName CBL_GCDAsyncSocketThreadName
-
+#define GCDAsyncSocketException CBL_GCDAsyncSocketException
 
 // Rename the CocoaLumberjack classes to avoid collisions:
 #define DDLog                       CBL_DDLog
