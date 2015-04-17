@@ -423,7 +423,7 @@
 		27B0B7CD1492B86C00A817AD /* CBLDatabase+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0744711CD4B6D00E9A2AB /* CBLDatabase+Internal.m */; };
 		27B0B7CE1492B86F00A817AD /* CBLView+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 279EB2CD149140DE00E74185 /* CBLView+Internal.m */; };
 		27B0B7CF1492B87200A817AD /* CBL_Body.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F074AA11CD5D7A00E9A2AB /* CBL_Body.m */; };
-		27B0B7D01492B87500A817AD /* CBL_Revision.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B3E3814898DF200E0A926 /* CBL_Revision.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		27B0B7D01492B87500A817AD /* CBL_Revision.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B3E3814898DF200E0A926 /* CBL_Revision.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		27B0B7D11492B87800A817AD /* CBL_Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C706411486BBD500F0F099 /* CBL_Server.m */; };
 		27B0B7D21492B87D00A817AD /* CBLCollateJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 279EB2DA1491C34300E74185 /* CBLCollateJSON.m */; };
 		27B0B7D51492B88F00A817AD /* CBL_Replicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 27821BB6148E7D6F0099B373 /* CBL_Replicator.m */; };
@@ -493,7 +493,7 @@
 		27D90B1A15601F8C0000735E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E7FB02155DBDA20025F93A /* Security.framework */; };
 		27DA42F8158E66DD00F9E7B5 /* CBLRevision.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA42F6158E66DD00F9E7B5 /* CBLRevision.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DA42F9158E66DD00F9E7B5 /* CBLRevision.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA42F7158E66DD00F9E7B5 /* CBLRevision.m */; };
-		27DA42FA158E66DD00F9E7B5 /* CBLRevision.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA42F7158E66DD00F9E7B5 /* CBLRevision.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		27DA42FA158E66DD00F9E7B5 /* CBLRevision.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA42F7158E66DD00F9E7B5 /* CBLRevision.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		27DA42FD158E7D3500F9E7B5 /* CBLDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA42FB158E7D3500F9E7B5 /* CBLDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DA42FE158E7D3500F9E7B5 /* CBLDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA42FC158E7D3500F9E7B5 /* CBLDatabase.m */; };
 		27DA42FF158E7D3500F9E7B5 /* CBLDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA42FC158E7D3500F9E7B5 /* CBLDatabase.m */; };
@@ -609,7 +609,7 @@
 		27F5B18916519F8F00126D0D /* MYDynamicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA434E15918C0200F9E7B5 /* MYDynamicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27F6D02B16B72885006E1576 /* CBLJSFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F6D02A16B72885006E1576 /* CBLJSFunction.m */; };
 		27F8AF3517B046E000105C8F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275315F414ACF1CC0065964D /* Security.framework */; };
-		27F9411B176A5FB4007BAEBE /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B945A41767E06B00B2DF2D /* ModelTests.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		27F9411B176A5FB4007BAEBE /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B945A41767E06B00B2DF2D /* ModelTests.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		27F9411C176A5FB9007BAEBE /* CBLModel+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B945B117692E2000B2DF2D /* CBLModel+Properties.m */; };
 		27F9411D176A5FC2007BAEBE /* CBLModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B945A81768E63200B2DF2D /* CBLModelArray.m */; };
 		27F94120176A64BA007BAEBE /* CBLJSONValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F9411E176A64BA007BAEBE /* CBLJSONValidator.h */; };
