@@ -60,6 +60,10 @@ extern "C" {
 #define DDLogMessage                CBL_DDLogMessage
 #define DDAbstractLogger            CBL_DDAbstractLogger
 #define DDLoggerNode                CBL_DDLoggerNode
+#define DDRange CBL_DDRange
+#define DDExtractFileNameWithoutExtension CBL_DDExtractFileNameWithoutExtension
+#define DDIntersectionRange         CBL_DDIntersectionRange
+#define DDRangeCompare              CBL_DDRangeCompare
 
 // Rename the CocoaHTTPServer classes to avoid collisions:
 #define HTTPAsyncFileResponse       CBL_HTTPAsyncFileResponse
