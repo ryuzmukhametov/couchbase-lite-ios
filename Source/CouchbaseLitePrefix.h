@@ -64,6 +64,10 @@ extern "C" {
 #define DDExtractFileNameWithoutExtension CBL_DDExtractFileNameWithoutExtension
 #define DDIntersectionRange         CBL_DDIntersectionRange
 #define DDRangeCompare              CBL_DDRangeCompare
+#define DDUnionRange                CBL_DDUnionRange
+#define DDStringFromRange           CBL_DDStringFromRange
+#define DDRangeFromString           CBL_DDRangeFromString
+
 
 // Rename the CocoaHTTPServer classes to avoid collisions:
 #define HTTPAsyncFileResponse       CBL_HTTPAsyncFileResponse
