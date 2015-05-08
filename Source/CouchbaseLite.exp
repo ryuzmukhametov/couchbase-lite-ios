@@ -54,6 +54,7 @@ _OBJC_CLASS_$_CBLUITableSource
 # Public string constants:
 _CBLHTTPErrorDomain
 _kCBLDatabaseChangeNotification
+_kCBLDatabaseChangeNowNotification
 _kCBLDocumentChangeNotification
 _kCBLReplicationChangeNotification
 
