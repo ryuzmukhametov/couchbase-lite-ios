@@ -5073,6 +5073,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CBLForestDBStorage;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -5100,6 +5101,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CBLForestDBStorage;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
