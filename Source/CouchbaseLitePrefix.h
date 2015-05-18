@@ -60,6 +60,7 @@ extern "C" {
 #define DDLogMessage                CBL_DDLogMessage
 #define DDAbstractLogger            CBL_DDAbstractLogger
 #define DDLoggerNode                CBL_DDLoggerNode
+
 #define DDRange CBL_DDRange
 #define DDExtractFileNameWithoutExtension CBL_DDExtractFileNameWithoutExtension
 #define DDIntersectionRange         CBL_DDIntersectionRange
@@ -67,6 +68,9 @@ extern "C" {
 #define DDUnionRange                CBL_DDUnionRange
 #define DDStringFromRange           CBL_DDStringFromRange
 #define DDRangeFromString           CBL_DDRangeFromString
+
+
+#define DDExtractFileNameWithoutExtension CBL_DDExtractFileNameWithoutExtension
 
 
 // Rename the CocoaHTTPServer classes to avoid collisions:
@@ -88,7 +92,7 @@ extern "C" {
 #define OARequestParameter          CBL_OARequestParameter
 #define OAToken                     CBL_OAToken
 
-// Rename the WebScket classes to avoid collisions:
+// Rename the WebSocket classes to avoid collisions:
 #define WebSocket                   CBL_WebSocket
 #define WebSocketClient             CBL_WebSocketClient
 #define WebSocketHTTPLogic          CBL_WebSocketHTTPLogic
