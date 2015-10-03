@@ -552,6 +552,7 @@ NSString* const kCBLReplicationChangeNotification = @"CBLReplicationChange";
         [self bg_setReplicator: nil];
     }
 
+    __unused CBLReplication *strongSelf = self;
     __weak CBLReplication *weakSelf = self;
     [_database doAsync: ^{
         CBLReplication *strongSelf = weakSelf;
